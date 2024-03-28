@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Willkommen zu Esthers Geschenksimulator 2024</h1>
+        <div id="countdown"><span id="countdown-timer"></span></div>
+        <div class="options-container">
+            <div class="option" onclick="selectPresent('Switch Pro Controller')" id="Switch Pro Controller-option">
+                <img src="procontroller.png" alt="procontroller">
+                <h2>Nintendo Switch Pro Controller</h2>
+                <p>Stylischer Nintendo Switch Controller - driftet nicht und ist hochwertiger als die komischen Joycons!</p>
+            </div>
+            <div class="option" onclick="selectPresent('Therme')" id="Therme-option">
+                <img src="therme.png" alt="Brutus Bau Event">
+                <h2>Themenausflug</h2>
+                <p>Ausflug in entspannende Therme!</p>
+            </div>
+        </div>
+        <div id="selected-presents"></div>
+        
+        <button id="continue-button" onclick="showLoadingScreen()" style="display: none; margin: 0 auto;">Weiter</button>
+        
+        <div id="loading-screen" style="display: none;">
+            <p>Loading...</p>
+            <div id="countdown-timer-loading"></div>
+            <img src="spinner.gif" alt="Loading Spinner">
+          </div>
+
+    </div>
+    <script src="countdown.js"></script>
+    <script>
+    
+
+        // Present Selection
+        var selectedPresents = []; // Array to store the selected presents
+
+        function selectPresent(present) {
+            // Check if the present is already selected
+            var index = selectedPresents.indexOf(present);
+            if (index > -1) {
+                // Present is already selected, remove it from the array
+                selectedPresents.splice(index, 1);
+                document.getElementById(present + '-option').classList.remove('selected');
+
+            } else {
+                // Present is not selected, add it to the array
+                selectedPresents.push(present);
+                document.getElementById(present + '-option').classList.add('selected');
+
+            }
+
+            updateSelectedPresents();
+        }
+
+        function updateSelectedPresents() {
+            var selectedPresentsElement = document.getElementById('selected-presents');
+            var html = "<h2>Ausgewählte Geschenke:</h2>";
+
+            if (selectedPresents.length > 0) {
+                for (var i = 0; i < selectedPresents.length; i++) {
+                    html += "<p>" + selectedPresents[i] + "</p>";
+                }
+            } else {
+                html += "<p>Keine Geschenke ausgewählt??</p>";
+            }
+
+            selectedPresentsElement.innerHTML = html;
+
+            // Show preferences form when at least one present is selected
+            if (selectedPresents.length === 2) {
+                document.getElementById('continue-button').style.display = 'block';
+            } else {
+                document.getElementById('continue-button').style.display = 'none';
+            }
+
+
+        }
+
+        // Function to continue to preferences page
+        function continueToPreferences() {
+            window.location.href = "preferences.html";
+        }
+
+        // Function to show the loading screen
+        function showLoadingScreen() {
+        // Show the loading screen
+        document.getElementById('loading-screen').style.display = 'flex'; // Use flex to center items vertically
+        // Hide the "Weiter" button
+        document.getElementById('continue-button').style.display = 'none';
+
+        // Set a timeout to hide the loading screen after 60 seconds
+        var secondsLeft = 15;
+        var countdownElement = document.getElementById('countdown-timer-loading');
+        var countdownInterval = setInterval(function() {
+            secondsLeft--;
+            if (secondsLeft <= 0) {
+            clearInterval(countdownInterval);
+            hideLoadingScreen();
+            redirectToPreferences();
+            }
+        }, 1000); // Update every second
+        }
+
+        // Function to hide the loading screen
+        function hideLoadingScreen() {
+        document.getElementById('loading-screen').style.display = 'none';
+        }
+
+        // Function to redirect to preferences page
+        function redirectToPreferences() {
+        window.location.href = "preferences.html";
+        }
+
+    </script>
+
+</body>
+
+</html>

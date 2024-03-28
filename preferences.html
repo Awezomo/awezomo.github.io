@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermenauswahl</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="preferences.css">
+    
+</head>
+
+<body>
+    <div class="container">
+        <h1>Willkommen zu Esthers Geschenksimulator 2024</h1>
+        <div id="countdown"><span id="countdown-timer"></span></div>
+        <h2>Thermenauswahl</h2>
+       
+        <div class="toggle-buttons">
+            <input type="radio" id="b1" name="group-b"/>
+            <label for="b1">Bad Schallerbach</label>
+            <input type="radio" id="b2" name="group-b"/>
+            <label for="b2">Geinberg</label>
+            <input type="radio" id="b3" name="group-b"/>
+            <label for="b3">Eigene Therme eingeben</label>
+        </div>
+
+        <div id="custom-therme" style="display: none;">
+            <input type="text" id="custom-therme-input" placeholder="Eigene Therme eingeben">
+        </div>
+
+        <div class="calendar-container">
+            <label for="spa-date">Datum für den Spa-Trip:</label>
+            <input type="date" id="spa-date" name="spa-date">
+        </div>
+
+        <button id="continue-button" class="continue-button" onclick="generateICSEvent() " style="margin-top: 20px;">Fertig</button>
+        <button class="back-button" onclick="goBack()">Back</button>
+    </div>
+
+    <script src="countdown.js"></script>
+</body>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    document.getElementById('b3').addEventListener('change', function() {
+        document.getElementById('custom-therme').style.display = this.checked ? 'block' : 'none';
+    });
+
+    function generateICSEvent() {
+        var spaName = '';
+        var spaInput = document.querySelector('input[name="group-b"]:checked');
+        if (spaInput) {
+            spaName = spaInput.nextElementSibling.textContent.trim();
+            if (spaInput.id === 'b3') {
+                spaName = document.getElementById('custom-therme-input').value.trim();
+            }
+        }
+
+        var dateInput = document.getElementById('spa-date').value;
+        if (!spaName || !dateInput) {
+            alert('Gscheid lesen esther, du musst a Therme UND a Datum auswählen!');
+            return;
+        }
+
+        var eventStart = new Date(dateInput);
+        var eventEnd = new Date(eventStart);
+        eventEnd.setDate(eventEnd.getDate() + 1); // Set end date to the next day
+
+        var icsFile = generateICSFile(spaName, eventStart, eventEnd);
+        downloadICSFile(icsFile);
+    }
+
+    function generateICSFile(summary, start, end) {
+        var startDate = formatDate(start);
+        var endDate = formatDate(end);
+        var icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:${summary}
+DTSTART:${startDate}
+DTEND:${endDate}
+END:VEVENT
+END:VCALENDAR`;
+
+        return icsContent;
+    }
+
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        return `${year}${month}${day}`;
+    }
+
+    function downloadICSFile(icsContent) {
+        var blob = new Blob([icsContent], { type: 'text/calendar' });
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'auspflugyey.ics';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+</script>
+
+</html>

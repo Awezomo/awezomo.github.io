@@ -1,0 +1,218 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('happybirthday.jpg');
+    background-size: cover; /* This ensures that the background image covers the entire viewport */
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Adding a semi-transparent background to the container */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(238, 9, 135, 0.5);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.option {
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    flex-basis: 200px;
+}
+
+.option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.option img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.option:hover img {
+    transform: scale(1.1);
+}
+
+.option h2 {
+    margin-top: 10px;
+}
+
+.option p {
+    margin-top: 10px;
+    color: #f615ef;
+}
+
+.option.selected {
+    border: 2px solid blue; /* Change the color and thickness as desired */
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Change the color and blur radius as desired */
+}
+
+#selected-presents {
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+#preferences-form {
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#preferences-form label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+    color: #333;
+}
+
+#preferences-form input[type="text"],
+#preferences-form input[type="email"],
+#preferences-form textarea,
+#preferences-form input[type="datetime-local"],
+#preferences-form input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#preferences-form textarea {
+    height: 100px;
+}
+
+#continue-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#continue-button:hover {
+    background-color: #45a049;
+}
+
+/* Paste the CSS code here */
+#countdown {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #333;
+}
+
+#countdown-timer {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f44336; /* Red background color */
+    color: #fff; /* White text color */
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+/* Animation for countdown timer */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#countdown-timer {
+    animation: pulse 1.5s infinite alternate; /* Apply the pulse animation */
+}
+
+/* Progress bar styles */
+.progress-bar {
+    margin-top: 10px;
+    height: 20px;
+    background-color: #ddd; /* Light gray background color */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Hide overflowing content */
+}
+
+.progress {
+    height: 100%;
+    background-color: #4caf50; /* Green progress bar color */
+    transition: width 1s ease-in-out; /* Smooth width transition */
+}
+
+/* Countdown flip clock styles */
+.flip-clock {
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.flip-clock .digit {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    color: #fff;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+    margin: 0 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Add styles for the loading screen */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    color: #fff;
+    display: none; /* Initially hidden */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+  }
+  
+  #countdown-timer-loading {
+    margin-bottom: 10px;
+  }
+  
+  #loading-screen img {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    animation: spin 2s linear infinite; /* Apply spinning animation */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  
