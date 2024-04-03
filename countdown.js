@@ -27,6 +27,10 @@ function updateCountdown() {
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         countdownElement.innerHTML = "Es sind noch " + days + "d " + hours + "h " + minutes + "m " + seconds + "s bis zu Esthers Geburtstag!";
+
+        // Hide options container and continue button if current date is before birthday
+        optionsContainer.style.display = 'none';
+        continueButton.style.display = 'none';
     }
 }
 updateCountdown();
