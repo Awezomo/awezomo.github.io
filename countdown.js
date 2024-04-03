@@ -1,6 +1,8 @@
 // Countdown Timer
 var birthday = new Date("2024-04-10T00:00:00");
 var countdownElement = document.getElementById('countdown-timer');
+var optionsContainer = document.querySelector('.options-container');
+var continueButton = document.getElementById('continue-button');
 
 function updateCountdown() {
     var now = new Date();
@@ -27,7 +29,7 @@ function updateCountdown() {
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         countdownElement.innerHTML = "Es sind noch " + days + "d " + hours + "h " + minutes + "m " + seconds + "s bis zu Esthers Geburtstag!";
-
+        
         // Hide options container and continue button if current date is before birthday
         optionsContainer.style.display = 'none';
         continueButton.style.display = 'none';
