@@ -508,30 +508,32 @@ body {
     }
 
     .citation-content {
-        padding: min(1.5rem, 4vw);
-        gap: min(1.5rem, 4vw);
+        padding: min(2rem, 5vw);
+        gap: min(2rem, 5vw);
+        width: 90%;
     }
 
     .poet-image {
-        width: min(100px, 25vw);
-        height: min(100px, 25vw);
+        width: min(120px, 30vw);
+        height: min(120px, 30vw);
         border-width: 2px;
     }
 
     .citation-text {
-        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        font-size: clamp(1.5rem, 6vw, 2rem);
+        margin-bottom: min(1.5rem, 4vw);
     }
     
     .citation-author {
-        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        font-size: clamp(1.2rem, 5vw, 1.4rem);
     }
 
     .continue-button {
-        padding: clamp(0.5rem, 2vw, 0.8rem) clamp(1rem, 4vw, 2rem);
-        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        padding: clamp(0.8rem, 3vw, 1rem) clamp(1.5rem, 5vw, 2.5rem);
+        font-size: clamp(1.1rem, 4.5vw, 1.3rem);
         width: 100%;
         max-width: 300px;
-        margin: min(2rem, 5vh) auto 0;
+        margin: min(2.5rem, 6vh) auto 0;
     }
 }
 
