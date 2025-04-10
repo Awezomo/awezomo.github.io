@@ -5,8 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Alles Gute zum Geburtstag! ❤️</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .date-restriction-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .date-restriction-content {
+            max-width: 600px;
+            font-family: sans-serif;
+        }
+        .date-restriction-content h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .date-restriction-content p {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
+    <div id="dateRestriction" class="date-restriction-overlay">
+        <div class="date-restriction-content">
+            <h1>Desired Site unavailable.</h1>
+            <p>Return on a special date!</p>
+            <p id="countdown"></p>
+        </div>
+    </div>
+
     <div class="citation-overlay">
         <div class="citation-content">
             <img src="dichterin.jpg" alt="Poet" class="poet-image">
@@ -43,7 +80,41 @@
     </div>
 
     <script>
+        function checkDate() {
+            const today = new Date();
+            const isApril10 = today.getMonth() === 3 && today.getDate() === 10;
+            const dateRestriction = document.getElementById('dateRestriction');
+            const countdownElement = document.getElementById('countdown');
+
+            if (!isApril10) {
+                const currentYear = today.getFullYear();
+                let nextApril10 = new Date(currentYear, 3, 10);
+                
+                if (today > nextApril10) {
+                    nextApril10 = new Date(currentYear + 1, 3, 10);
+                }
+
+                const timeUntil = nextApril10 - today;
+                const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
+
+                countdownElement.textContent = `${days} Tage, ${hours} Stunden und ${minutes} Minuten`;
+                dateRestriction.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                return false;
+            }
+
+            dateRestriction.style.display = 'none';
+            document.body.style.overflow = '';
+            return true;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            if (!checkDate()) {
+                return;
+            }
+
             const giftContainer = document.querySelector('.gift-container');
             const citationOverlay = document.querySelector('.citation-overlay');
             const sparklesContainer = document.getElementById('sparkles');
@@ -82,6 +153,12 @@
                 openGift();
             });
         });
+
+        setInterval(() => {
+            if (document.getElementById('dateRestriction').style.display !== 'none') {
+                checkDate();
+            }
+        }, 60000);
 
         function showGift() {
             const citationOverlay = document.querySelector('.citation-overlay');
