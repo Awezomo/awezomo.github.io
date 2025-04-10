@@ -4,38 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thermenauswahl</title>
+    <title>Abenteuerausflug & Fotoshooting</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" type="text/css" href="preferences.css">
-    
 </head>
 
 <body>
     <div class="container">
-        <h1>Willkommen zu Esthers Geschenksimulator 2024</h1>
+        <h1>Willkommen zu Esthers Geschenksimulator 2025</h1>
         <div id="countdown"><span id="countdown-timer"></span></div>
-        <h2>Thermenauswahl</h2>
+        <h2>Wähle dein Abenteuer</h2>
        
         <div class="toggle-buttons">
             <input type="radio" id="b1" name="group-b"/>
-            <label for="b1">Bad Schallerbach</label>
+            <label for="b1">Bergabenteuer & Fotoshooting in den Alpen</label>
             <input type="radio" id="b2" name="group-b"/>
-            <label for="b2">Geinberg</label>
+            <label for="b2">Sonnenuntergang am See mit Fotoshooting</label>
             <input type="radio" id="b3" name="group-b"/>
-            <label for="b3">Eigene Therme eingeben</label>
+            <label for="b3">Eigene Location vorschlagen</label>
         </div>
 
         <div id="custom-therme" style="display: none;">
-            <input type="text" id="custom-therme-input" placeholder="Eigene Therme eingeben">
+            <input type="text" id="custom-therme-input" placeholder="Deine Wunschlocation">
         </div>
 
         <div class="calendar-container">
-            <label for="spa-date">Datum für den Spa-Trip:</label>
-            <input type="date" id="spa-date" name="spa-date">
+            <label for="spa-date">Wunschdatum für das Abenteuer:</label>
+            <input type="date" id="spa-date" name="spa-date" min="2025-04-10">
+            <p class="date-note">Bitte beachte: Das finale Datum wird noch mit dem Fotografen abgestimmt.</p>
         </div>
 
-        <button id="continue-button" class="continue-button" onclick="generateICSEvent() " style="margin-top: 20px;">Fertig</button>
-        <button class="back-button" onclick="goBack()">Back</button>
+        <button id="continue-button" class="continue-button" onclick="generateICSEvent()" style="margin-top: 20px;">Abenteuer planen!</button>
+        <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
 
     <script src="countdown.js"></script>
@@ -51,36 +51,37 @@
     });
 
     function generateICSEvent() {
-        var spaName = '';
-        var spaInput = document.querySelector('input[name="group-b"]:checked');
-        if (spaInput) {
-            spaName = spaInput.nextElementSibling.textContent.trim();
-            if (spaInput.id === 'b3') {
-                spaName = document.getElementById('custom-therme-input').value.trim();
+        var locationName = '';
+        var locationInput = document.querySelector('input[name="group-b"]:checked');
+        if (locationInput) {
+            locationName = locationInput.nextElementSibling.textContent.trim();
+            if (locationInput.id === 'b3') {
+                locationName = document.getElementById('custom-therme-input').value.trim();
             }
         }
 
         var dateInput = document.getElementById('spa-date').value;
-        if (!spaName || !dateInput) {
-            alert('Gscheid lesen esther, du musst a Therme UND a Datum auswählen!');
+        if (!locationName || !dateInput) {
+            alert('Bitte wähle eine Location UND ein Datum aus!');
             return;
         }
 
         var eventStart = new Date(dateInput);
         var eventEnd = new Date(eventStart);
-        eventEnd.setDate(eventEnd.getDate() + 1); // Set end date to the next day
+        eventEnd.setHours(eventStart.getHours() + 4); // Set duration to 4 hours
 
-        var icsFile = generateICSFile(spaName, eventStart, eventEnd);
+        var icsFile = generateICSFile(locationName, eventStart, eventEnd);
         downloadICSFile(icsFile);
     }
 
     function generateICSFile(summary, start, end) {
-        var startDate = formatDate(start);
-        var endDate = formatDate(end);
+        var startDate = formatDateTime(start);
+        var endDate = formatDateTime(end);
         var icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-SUMMARY:${summary}
+SUMMARY:Abenteuerausflug & Fotoshooting: ${summary}
+DESCRIPTION:Ein unvergessliches Paar-Fotoshooting an einem besonderen Ort!
 DTSTART:${startDate}
 DTEND:${endDate}
 END:VEVENT
@@ -89,11 +90,13 @@ END:VCALENDAR`;
         return icsContent;
     }
 
-    function formatDate(date) {
+    function formatDateTime(date) {
         var year = date.getFullYear();
         var month = String(date.getMonth() + 1).padStart(2, '0');
         var day = String(date.getDate()).padStart(2, '0');
-        return `${year}${month}${day}`;
+        var hours = String(date.getHours()).padStart(2, '0');
+        var minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}${month}${day}T${hours}${minutes}00`;
     }
 
     function downloadICSFile(icsContent) {
@@ -101,7 +104,7 @@ END:VCALENDAR`;
         var url = window.URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = 'auspflugyey.ics';
+        a.download = 'abenteuerausflug.ics';
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);

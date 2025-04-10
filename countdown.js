@@ -1,5 +1,5 @@
 // Countdown Timer
-var birthday = new Date("2024-04-10T00:00:00");
+var birthday = new Date("2025-04-10T00:00:00");
 var countdownElement = document.getElementById('countdown-timer');
 var optionsContainer = document.querySelector('.options-container');
 var continueButton = document.getElementById('continue-button');

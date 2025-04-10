@@ -1,128 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday!</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alles Gute zum Geburtstag! ❤️</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+    <div class="citation-overlay">
+        <div class="citation-content">
+            <img src="dichterin.jpg" alt="Poet" class="poet-image">
+            <p class="citation-text">„Ich liebe dich nicht nur dafür, was du bist, sondern dafür, was ich bin, wenn ich mit dir zusammen bin.“</p>
+            <p class="citation-author"> Elizabeth Barrett Browning</p>
+            <button class="continue-button" onclick="showGift()">Weiter</button>
 
-    <div class="container">
-        <h1>Willkommen zu Esthers Geschenksimulator 2024</h1>
-        <div id="countdown"><span id="countdown-timer"></span></div>
-        <div class="options-container">
-            <div class="option" onclick="selectPresent('Switch Pro Controller')" id="Switch Pro Controller-option">
-                <img src="procontroller.png" alt="procontroller">
-                <h2>Nintendo Switch Pro Controller</h2>
-                <p>Stylischer Nintendo Switch Controller - driftet nicht und ist hochwertiger als die komischen Joycons!</p>
-            </div>
-            <div class="option" onclick="selectPresent('Therme')" id="Therme-option">
-                <img src="therme.png" alt="Brutus Bau Event">
-                <h2>Thermenausflug</h2>
-                <p>Ausflug in entspannende Therme nach Wahl!</p>
+        </div> <!-- Closing the citation-content div -->
+    </div> <!-- Fixed the closing div tag -->
+
+    <div class="main-container">
+        <div class="birthday-message">
+            <h1 class="birthday-heading">Alles Gute zum Geburtstag Esther!</h1>
+        </div>
+        
+        <div class="gift-section">
+            <div class="gift-container" tabindex="0" role="button" aria-label="Geschenk öffnen">
+                <div class="gift-box">
+                    <div class="gift-base">
+                        <div class="gift-inside">
+                            <h3>Abenteuerausflug in die Natur mit Paar-Fotoshooting</h3>
+                        </div>
+                    </div>
+                    <div class="gift-lid"></div>
+                    <div class="ribbon-container">
+                        <div class="ribbon ribbon-vertical"></div>
+                        <div class="ribbon ribbon-horizontal"></div>
+                        <div class="ribbon-circle"></div>
+                    </div>
+                    <div class="sparkles" id="sparkles"></div>
+                </div>
             </div>
         </div>
-        <div id="selected-presents"></div>
-        
-        <button id="continue-button" onclick="showLoadingScreen()" style="display: none; margin: 0 auto;">Weiter</button>
-        
-        <div id="loading-screen" style="display: none;">
-            <p>Loading...</p>
-            <div id="countdown-timer-loading"></div>
-            <img src="spinner.gif" alt="Loading Spinner">
-          </div>
-
     </div>
-    <script src="countdown.js"></script>
+
     <script>
-    
-
-        // Present Selection
-        var selectedPresents = []; // Array to store the selected presents
-
-        function selectPresent(present) {
-            // Check if the present is already selected
-            var index = selectedPresents.indexOf(present);
-            if (index > -1) {
-                // Present is already selected, remove it from the array
-                selectedPresents.splice(index, 1);
-                document.getElementById(present + '-option').classList.remove('selected');
-
-            } else {
-                // Present is not selected, add it to the array
-                selectedPresents.push(present);
-                document.getElementById(present + '-option').classList.add('selected');
-
+        document.addEventListener('DOMContentLoaded', function() {
+            const giftContainer = document.querySelector('.gift-container');
+            const citationOverlay = document.querySelector('.citation-overlay');
+            const sparklesContainer = document.getElementById('sparkles');
+            
+            // Create sparkles
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                sparkle.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
+                sparklesContainer.appendChild(sparkle);
             }
+            
+            // Show citation overlay with delay
+            setTimeout(() => {
+                citationOverlay.classList.add('visible');
+                setTimeout(() => {
+                    citationOverlay.querySelector('.citation-content').style.opacity = '1';
+                    citationOverlay.querySelector('.citation-content').style.transform = 'translateY(0)';
+                }, 100);
+            }, 500);
 
-            updateSelectedPresents();
-        }
-
-        function updateSelectedPresents() {
-            var selectedPresentsElement = document.getElementById('selected-presents');
-            var html = "<h2>Ausgewählte Geschenke:</h2>";
-
-            if (selectedPresents.length > 0) {
-                for (var i = 0; i < selectedPresents.length; i++) {
-                    html += "<p>" + selectedPresents[i] + "</p>";
+            // Enable both click and keyboard interaction for gift
+            giftContainer.addEventListener('click', openGift);
+            giftContainer.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    openGift();
                 }
-            } else {
-                html += "<p>Keine Geschenke ausgewählt??</p>";
+            });
+
+            // Add touch events for better mobile experience
+            giftContainer.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openGift();
+            });
+        });
+
+        function showGift() {
+            const citationOverlay = document.querySelector('.citation-overlay');
+            const giftContainer = document.querySelector('.gift-container');
+            
+            // Hide citation overlay
+            citationOverlay.classList.remove('visible');
+            
+            // Enable gift interaction with bounce animation
+            setTimeout(() => {
+                giftContainer.classList.add('enabled');
+                // Start gentle floating animation
+                setTimeout(() => {
+                    giftContainer.style.animation = 'bounce 2s ease-in-out infinite';
+                }, 500);
+            }, 500);
+        }
+
+        function openGift() {
+            const giftContainer = document.querySelector('.gift-container');
+            
+            if (!giftContainer.classList.contains('enabled') || giftContainer.classList.contains('opened')) {
+                return;
             }
-
-            selectedPresentsElement.innerHTML = html;
-
-            // Show preferences form when at least one present is selected
-            if (selectedPresents.length === 2) {
-                document.getElementById('continue-button').style.display = 'block';
-            } else {
-                document.getElementById('continue-button').style.display = 'none';
+            
+            // Stop bounce animation
+            giftContainer.style.animation = 'none';
+            
+            // Create additional sparkles for opening animation
+            const sparklesContainer = document.getElementById('sparkles');
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.animationDelay = (Math.random() * 0.5) + 's';
+                    sparklesContainer.appendChild(sparkle);
+                    
+                    // Remove sparkle after animation
+                    setTimeout(() => sparkle.remove(), 2500);
+                }, i * 50);
             }
-
-
+            
+            // Add opened class with slight delay
+            setTimeout(() => {
+                giftContainer.classList.add('opened');
+            }, 50);
         }
-
-        // Function to continue to preferences page
-        function continueToPreferences() {
-            window.location.href = "preferences.html";
-        }
-
-        // Function to show the loading screen
-        function showLoadingScreen() {
-        // Show the loading screen
-        document.getElementById('loading-screen').style.display = 'flex'; // Use flex to center items vertically
-        // Hide the "Weiter" button
-        document.getElementById('continue-button').style.display = 'none';
-
-        // Set a timeout to hide the loading screen after 60 seconds
-        var secondsLeft = 15;
-        var countdownElement = document.getElementById('countdown-timer-loading');
-        var countdownInterval = setInterval(function() {
-            secondsLeft--;
-            if (secondsLeft <= 0) {
-            clearInterval(countdownInterval);
-            hideLoadingScreen();
-            redirectToPreferences();
-            }
-        }, 1000); // Update every second
-        }
-
-        // Function to hide the loading screen
-        function hideLoadingScreen() {
-        document.getElementById('loading-screen').style.display = 'none';
-        }
-
-        // Function to redirect to preferences page
-        function redirectToPreferences() {
-        window.location.href = "preferences.html";
-        }
-
     </script>
-
 </body>
-
 </html>

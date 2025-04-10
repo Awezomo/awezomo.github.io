@@ -1,218 +1,549 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #e74c3c;
+    --text-color: #34495e;
+    --light-color: #ecf0f1;
+    --transition: all 0.3s ease;
+    --gift-color: #ff69b4;
+    --gift-shadow: #d64d91;
+    --ribbon-color: #ff1493;
+    --ribbon-shadow: #cc1276;
+    --gift-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-image: url('happybirthday.jpg');
-    background-size: cover; /* This ensures that the background image covers the entire viewport */
-    background-repeat: no-repeat;
-}
-
-.container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8); /* Adding a semi-transparent background to the container */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(238, 9, 135, 0.5);
-    text-align: center;
-}
-
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.option {
-    margin: 20px;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-    flex-basis: 200px;
-}
-
-.option:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.option img {
-    width: 200px;
-    height: auto;
-    margin-bottom: 10px;
-    transition: transform 0.3s ease;
-}
-
-.option:hover img {
-    transform: scale(1.1);
-}
-
-.option h2 {
-    margin-top: 10px;
-}
-
-.option p {
-    margin-top: 10px;
-    color: #f615ef;
-}
-
-.option.selected {
-    border: 2px solid blue; /* Change the color and thickness as desired */
-    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Change the color and blur radius as desired */
-}
-
-#selected-presents {
-    margin-top: 30px;
-    font-size: 18px;
-}
-
-#preferences-form {
-    margin-top: 30px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-#preferences-form label {
-    display: block;
-    margin-bottom: 10px;
-    text-align: left;
-    color: #333;
-}
-
-#preferences-form input[type="text"],
-#preferences-form input[type="email"],
-#preferences-form textarea,
-#preferences-form input[type="datetime-local"],
-#preferences-form input[type="number"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     box-sizing: border-box;
 }
 
-#preferences-form textarea {
-    height: 100px;
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-color);
+    overflow: hidden;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('adventure.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
-#continue-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    padding: 2rem;
+    gap: 4rem;
+}
+
+.birthday-message {
+    flex: 1;
+    text-align: left;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideIn 1s ease forwards;
+}
+
+.birthday-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1rem;
+}
+
+.gift-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gift-container {
+    position: relative;
+    width: min(300px, 85vw);
+    height: min(350px, 90vw);
     cursor: pointer;
+    transform-style: preserve-3d;
+    animation: giftEntrance 2.5s ease-out;
+    perspective: 1500px;
+    pointer-events: none;
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
 }
 
-#continue-button:hover {
-    background-color: #45a049;
+.gift-container.enabled {
+    pointer-events: auto;
+    opacity: 1;
 }
 
-/* Paste the CSS code here */
-#countdown {
-    margin-top: 30px;
-    font-size: 24px;
-    color: #333;
-}
-
-#countdown-timer {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #f44336; /* Red background color */
-    color: #fff; /* White text color */
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Shadow effect */
-}
-
-/* Animation for countdown timer */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-#countdown-timer {
-    animation: pulse 1.5s infinite alternate; /* Apply the pulse animation */
-}
-
-/* Progress bar styles */
-.progress-bar {
-    margin-top: 10px;
-    height: 20px;
-    background-color: #ddd; /* Light gray background color */
-    border-radius: 10px; /* Rounded corners */
-    overflow: hidden; /* Hide overflowing content */
-}
-
-.progress {
+.gift-box {
+    position: relative;
+    width: 100%;
     height: 100%;
-    background-color: #4caf50; /* Green progress bar color */
-    transition: width 1s ease-in-out; /* Smooth width transition */
+    transform-style: preserve-3d;
+    transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Countdown flip clock styles */
-.flip-clock {
-    display: inline-block;
-    font-family: 'Courier New', Courier, monospace;
+.gift-lid {
+    position: absolute;
+    width: 100%;
+    height: 40%;
+    top: 0;
+    transform-origin: top;
+    transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, var(--gift-color) 0%, var(--gift-shadow) 100%);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 
+        0 5px 15px rgba(0,0,0,0.2),
+        inset 0 -5px 15px rgba(0,0,0,0.1),
+        inset 0 5px 15px rgba(255,255,255,0.2);
 }
 
-.flip-clock .digit {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    background-color: #333;
-    color: #fff;
-    font-size: 30px;
-    line-height: 40px;
+.gift-lid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--gift-texture);
+    border-radius: inherit;
+    opacity: 0.1;
+}
+
+.gift-container.opened .gift-lid {
+    transform: rotateX(-120deg) translateZ(50px);
+    opacity: 0;
+    transition-delay: 0.5s;
+}
+
+.gift-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--gift-color) 0%, var(--gift-shadow) 100%);
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 25px rgba(0,0,0,0.2),
+        inset 0 -5px 15px rgba(0,0,0,0.1),
+        inset 0 5px 15px rgba(255,255,255,0.2);
+    overflow: hidden;
+}
+
+.gift-base::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--gift-texture);
+    border-radius: inherit;
+    opacity: 0.1;
+}
+
+.gift-inside {
+    position: absolute;
+    width: 90%;
+    height: 80%;
+    left: 5%;
+    bottom: 10%;
+    background: white;
+    border-radius: 15px;
+    transform: translateY(100%) scale(0.8);
+    opacity: 0;
+    transition: all 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: 1.5s;
+    padding: min(30px, 8vw);
     text-align: center;
-    margin: 0 5px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-/* Add styles for the loading screen */
-#loading-screen {
+.gift-container.opened .gift-inside {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.ribbon-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transition: opacity 0.5s ease 1.5s;
+    transform-style: preserve-3d;
+}
+
+.gift-container.opened .ribbon-container {
+    opacity: 0;
+}
+
+.ribbon {
+    position: absolute;
+    background: linear-gradient(135deg, var(--ribbon-color) 0%, var(--ribbon-shadow) 100%);
+    box-shadow: 
+        0 2px 5px rgba(0,0,0,0.2),
+        inset 0 1px 3px rgba(255,255,255,0.3);
+    transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ribbon-vertical {
+    width: 40px;
+    height: 120%;
+    left: 50%;
+    top: -10%;
+    transform: translateX(-50%) rotateX(0);
+    transform-origin: center top;
+}
+
+.gift-container.opened .ribbon-vertical {
+    transform: translateX(-50%) rotateX(-60deg) scaleY(0.5);
+    opacity: 0;
+    transition-delay: 0.3s;
+}
+
+.ribbon-horizontal {
+    width: 120%;
+    height: 40px;
+    top: 50%;
+    left: -10%;
+    transform: translateY(-50%) rotateY(0);
+    transform-origin: center left;
+}
+
+.gift-container.opened .ribbon-horizontal {
+    transform: translateY(-50%) rotateY(60deg) scaleX(0.5);
+    opacity: 0;
+    transition-delay: 0.3s;
+}
+
+.ribbon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, var(--ribbon-color) 0%, var(--ribbon-shadow) 100%);
+    box-shadow: 
+        0 3px 8px rgba(0,0,0,0.2),
+        inset 0 2px 5px rgba(255,255,255,0.3);
+    z-index: 2;
+    transition: all 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gift-container.opened .ribbon-circle {
+    transform: translate(-50%, -50%) scale(0) rotate(180deg);
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+.ribbon-circle::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    top: 10px;
+    left: 10px;
+    filter: blur(2px);
+}
+
+.sparkles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+}
+
+.gift-container.opened .sparkles {
+    animation: sparkle 2s ease forwards;
+    animation-delay: 1s;
+}
+
+.sparkle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+.gift-container.opened .sparkle {
+    animation: sparkleOut 2.5s ease-out forwards;
+}
+
+.gift-inside h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--gift-color);
+}
+
+.gift-inside p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.citation-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-    color: #fff;
-    display: none; /* Initially hidden */
-    flex-direction: column; /* Stack items vertically */
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
-  }
-  
-  #countdown-timer-loading {
-    margin-bottom: 10px;
-  }
-  
-  #loading-screen img {
-    width: 50px; /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    animation: spin 2s linear infinite; /* Apply spinning animation */
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s;
+    z-index: 1000;
+}
+
+.citation-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.citation-content {
+    max-width: 800px;
+    padding: 2rem;
+    color: white;
+    text-align: center;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 1s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.poet-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 1s ease 0.3s;
+}
+
+.citation-overlay.visible .poet-image {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.citation-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease 0.6s;
+}
+
+.citation-overlay.visible .citation-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.citation-author {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease 0.9s;
+}
+
+.citation-overlay.visible .citation-author {
+    opacity: 0.8;
+    transform: translateY(0);
+}
+
+.continue-button {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.continue-button:hover {
+    background: white;
+    color: black;
+}
+
+@keyframes sparkle {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.4);
+    }
+}
+
+@keyframes sparkleOut {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+@keyframes giftEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(100px);
+    }
+    50% {
+        transform: scale(1.2) translateY(-20px);
+    }
+    70% {
+        transform: scale(0.9) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.gift-container:hover {
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        gap: min(2rem, 5vh);
+        padding: min(2rem, 5vw);
+        height: 100%;
+        justify-content: center;
+    }
+
+    .birthday-message {
+        text-align: center;
+        order: 1;
+        padding: min(1rem, 3vw);
+    }
+
+    .birthday-heading {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    .gift-section {
+        order: 2;
+        width: 100%;
+        padding: min(1rem, 3vw);
+    }
+
+    .gift-container {
+        margin: 0 auto;
+    }
+
+    .gift-inside h2 {
+        font-size: clamp(1.2rem, 5vw, 1.5rem);
+    }
+
+    .gift-inside p {
+        font-size: clamp(0.9rem, 4vw, 1rem);
+    }
+
+    .citation-overlay {
+        padding: min(1rem, 3vw);
+    }
+
+    .citation-content {
+        padding: min(1.5rem, 4vw);
+        gap: min(1.5rem, 4vw);
+    }
+
+    .poet-image {
+        width: min(100px, 25vw);
+        height: min(100px, 25vw);
+        border-width: 2px;
+    }
+
+    .citation-text {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+    }
+    
+    .citation-author {
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+    }
+
+    .continue-button {
+        padding: clamp(0.5rem, 2vw, 0.8rem) clamp(1rem, 4vw, 2rem);
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        width: 100%;
+        max-width: 300px;
+        margin: min(2rem, 5vh) auto 0;
+    }
+}
+
+@media (hover: none) {
+    .continue-button:active {
+        background: white;
+        color: black;
+    }
+
+    .gift-container:active {
+        transform: scale(0.98);
+    }
+}
+
+
